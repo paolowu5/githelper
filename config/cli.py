@@ -55,7 +55,7 @@ def main_menu():
             commands[choice]()
         elif choice == "0":
             clear_screen()
-            print(RetroColors.TITLE + "Thank you for using Git Manager! Goodbye.")
+            print(RetroColors.TITLE + "Thank you for using Git Manager!")
             sys.exit(0)
         else:
             print(RetroColors.WARNING + "\n[!] Invalid option. Please try again.")
