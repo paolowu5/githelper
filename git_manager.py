@@ -12,7 +12,7 @@ def main():
         show_banner()
         display_menu()
         
-        choice = input(RetroColors.PROMPT + "\nSelect an option: ")
+        choice = input(RetroColors.PROMPT + "\nSelect an options: ")
         
         if choice == '1':
             git_status()
