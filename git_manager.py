@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# git_manager.py
+# git_manager
 import sys
 from utils.ui import clear_screen, show_banner, display_menu
 from utils.git_commands import git_status, git_log, git_init, git_add_remote

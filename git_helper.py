@@ -76,7 +76,7 @@ def git_log():
 
 # [SETUP] FUNCTIONS
 def git_init():
-    """Initializes a new Git repository"""
+    """Initializes a new Git repository and sets the default branch to main"""
     clear_screen()
     show_banner()
     print(RetroColors.HEADER + "\n[+] Initializing a new Git repository")
@@ -84,7 +84,10 @@ def git_init():
     choice = input(RetroColors.PROMPT + "Confirm initialization of a new repository? (y/n): ")
     if choice.lower() == 'y':
         os.system("git init")
-        print(RetroColors.SUCCESS + "\n[✓] Repository initialized!")
+        
+        # Rename branch to main
+        os.system("git branch -M main")
+        print(RetroColors.SUCCESS + "\n[✓] Repository initialized with 'main' as the default branch!")
         
         # Ask to add files and make first commit
         add_files = input(RetroColors.PROMPT + "\nAdd all files and make first commit? (y/n): ")
@@ -96,6 +99,7 @@ def git_init():
             
             os.system(f'git commit -m "{commit_msg}"')
             print(RetroColors.SUCCESS + f"\n[✓] First commit created with message: '{commit_msg}'")
+    
     else:
         print(RetroColors.WARNING + "\n[!] Initialization cancelled.")
     
@@ -146,19 +150,28 @@ def git_create_branch():
     print(RetroColors.HEADER + "\nCurrent branches:")
     os.system("git branch")
     
-    choice = input(RetroColors.PROMPT + "\nCreate new branch (c) or switch branch (s)? (c/s): ")
-    if choice.lower() == 'c':
-        branch_name = input(RetroColors.PROMPT + "Enter new branch name: ")
-        if not branch_name:
-            branch_name = "main"
-        
-        os.system(f"git branch -M {branch_name}")
-        print(RetroColors.SUCCESS + f"\n[✓] Branch '{branch_name}' created/renamed!")
-    elif choice.lower() == 's':
-        branch_name = input(RetroColors.PROMPT + "Enter branch name to switch to: ")
-        os.system(f"git checkout {branch_name}")
-        print(RetroColors.SUCCESS + f"\n[✓] Switched to branch '{branch_name}'!")
+    choice = input(RetroColors.PROMPT + "\nCreate new branch (c), switch branch (s), or press Enter to cancel: ").strip().lower()
     
+    if choice == "c":
+        branch_name = input(RetroColors.PROMPT + "Enter new branch name: ").strip()
+        if branch_name:
+            os.system(f"git branch {branch_name}")
+            os.system(f"git checkout {branch_name}")
+            print(RetroColors.SUCCESS + f"\n[✓] Branch '{branch_name}' created and switched to it!")
+        else:
+            print(RetroColors.WARNING + "\n[!] Branch creation cancelled (no name provided).")
+
+    elif choice == "s":
+        branch_name = input(RetroColors.PROMPT + "Enter branch name to switch to: ").strip()
+        if branch_name:
+            os.system(f"git checkout {branch_name}")
+            print(RetroColors.SUCCESS + f"\n[✓] Switched to branch '{branch_name}'!")
+        else:
+            print(RetroColors.WARNING + "\n[!] Switch cancelled (no branch name provided).")
+
+    else:
+        print(RetroColors.INFO + "\n[i] No action taken. Returning to the main menu...")
+
     time.sleep(1)
     print(RetroColors.INFO + "\n[i] Press Enter to return to main menu...")
     input()
