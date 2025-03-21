@@ -1,0 +1,7 @@
+git_manager/
+├── git_manager.py      # Script principale
+├── ui.py              # Funzioni per l'interfaccia utente
+├── git_commands.py    # Funzioni per i comandi Git
+├── config.py          # Configurazioni (colori, costanti)
+├── requirements.txt   # Dipendenze
+└── README.md          # Documentazione
