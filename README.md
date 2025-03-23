@@ -2,7 +2,7 @@
 
 A retro-styled visual interface for Git operations.
 
-![GitHelper Screenshot](banner.JPG)
+![GitHelper Screenshot](banner.jpg)
 
 ## About
 
