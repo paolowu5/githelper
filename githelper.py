@@ -170,17 +170,32 @@ def git_push():
     if input(RetroColors.PROMPT + f"Confirm push to '{branch}'? (y/n): ").lower() == 'y':
         # Check if remote branch exists
         check_remote = run_git_command(f"git ls-remote --heads origin {branch}", silent=True)
+        
+        # Ask if force push is needed
         if check_remote.returncode == 0 and check_remote.stdout.strip():
-            # Remote branch exists, safe to pull
-            print(RetroColors.HEADER + f"\n[+] Fetching changes from '{branch}'...")
-            run_git_command(f"git fetch origin {branch}")
-            print(RetroColors.HEADER + f"\n[+] Pulling changes from '{branch}'...")
-            pull_result = run_git_command(f"git pull origin {branch}")
-            if pull_result.returncode != 0:
-                print(RetroColors.WARNING + "\n[!] Pull failed. Resolve conflicts manually and try again.")
-                time.sleep(1)
-                input(RetroColors.INFO + "\n[i] Press Enter to return...")
-                return
+            force_push = input(RetroColors.PROMPT + "Remote branch exists. Use force push? (y/n): ").lower() == 'y'
+            if force_push:
+                print(RetroColors.WARNING + "\n[!] Force push will overwrite remote changes. Use with caution.")
+                if input(RetroColors.PROMPT + "Continue with force push? (y/n): ").lower() != 'y':
+                    print(RetroColors.INFO + "\n[i] Push cancelled.")
+                    time.sleep(1)
+                    input(RetroColors.INFO + "\n[i] Press Enter to return...")
+                    return
+        else:
+            force_push = False
+            
+        if check_remote.returncode == 0 and check_remote.stdout.strip():
+            # Remote branch exists, safe to pull (if not force pushing)
+            if not force_push:
+                print(RetroColors.HEADER + f"\n[+] Fetching changes from '{branch}'...")
+                run_git_command(f"git fetch origin {branch}")
+                print(RetroColors.HEADER + f"\n[+] Pulling changes from '{branch}'...")
+                pull_result = run_git_command(f"git pull origin {branch}")
+                if pull_result.returncode != 0:
+                    print(RetroColors.WARNING + "\n[!] Pull failed. Resolve conflicts manually and try again.")
+                    time.sleep(1)
+                    input(RetroColors.INFO + "\n[i] Press Enter to return...")
+                    return
         else:
             # No remote branch, inform user
             print(RetroColors.INFO + f"\n[i] Remote branch '{branch}' not found. Will create it on push.")
@@ -188,12 +203,6 @@ def git_push():
         # Push (with -u if it's a first push)
         print(RetroColors.HEADER + f"\n[+] Pushing to '{branch}'...")
         
-        # Ask if force push is needed
-        if check_remote.returncode == 0 and check_remote.stdout.strip():
-            force_push = input(RetroColors.PROMPT + "Remote branch exists. Use force push? (y/n): ").lower() == 'y'
-        else:
-            force_push = False
-            
         if check_remote.returncode != 0 or not check_remote.stdout.strip():
             # First push - use -u to set upstream
             push_cmd = f"git push -u origin {branch}"
@@ -215,6 +224,7 @@ def git_push():
     time.sleep(1)
     input(RetroColors.INFO + "\n[i] Press Enter to return...")
     
+       
 def quick_update():
     clear_screen()
     show_banner()
