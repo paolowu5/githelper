@@ -2,7 +2,11 @@
 
 A retro-styled visual interface for Git operations.
 
+<<<<<<< HEAD
 [![GitHelper Screenshot](banner.JPG)](https://githelper.pages.dev)
+=======
+![GitHelper Screenshot](banner.jpg)
+>>>>>>> 8b5b85299912b7a5bd2fa32744fa151d521d898f
 
 ## About
 
