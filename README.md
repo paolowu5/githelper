@@ -1,7 +1,7 @@
 # GitHelper
 
 ## Recent changes
-#### 2025-31-01 – Improved project initialization flow
+#### 2026-31-01 – Improved project initialization flow
 I was working on a friend's project and noticed he needed some help with github. After a bit of troubleshooting, I decided to simplify the setup and made these major changes
 
 ```bash
