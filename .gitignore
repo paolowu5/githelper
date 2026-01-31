@@ -1,4 +1,5 @@
 .git
 *.bat
 work
+_gitupdate.py
 
