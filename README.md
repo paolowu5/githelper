@@ -1,6 +1,16 @@
 # GitHelper
 
-A retro-styled visual interface for Git operations.
+## Recent changes
+#### 2025-31-01 – Improved project initialization flow
+I was working on a friend's project and noticed he needed some help with github. After a bit of troubleshooting, I decided to simplify the setup and made these major changes
+
+```bash
+
+- Replaced simple `git init` with guided setup wizard (menu option 3)  
+- Now handles: repository init, initial commit, remote origin setup, and optional first push  
+- Cleaner onboarding for new projects – fewer manual steps required
+
+```  
 
 [![GitHelper Screenshot](banner.JPG)](https://githelper.pages.dev)
 
